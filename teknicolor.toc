@@ -1,15 +1,11 @@
 ## Interface: 20000
 
-## Title: Teknicolor
+## Title: teknicolor
 ## Notes: Color player names in chat by their corresponding raid class colors
 ## Author: Tekkub Stoutwrithe
-## Version: 1.1
-## X-ReleaseDate: "$Date: 2006-07-27 10:33:04 -0500 (Thu, 27 Jul 2006) $"
 ## X-Website: http://wiki.wowace.com/index.php/Teknicolor
 ## X-Email: tekkub@gmail.com
-## OptionalDeps: Ace2, Babble-2.2
-libs\AceLibrary\AceLibrary.lua
-libs\AceLocale-2.2\AceLocale-2.2.lua
-libs\Babble-Class-2.2\Babble-Class-2.2.lua
 
-Core.lua
+## OptionalDeps: Dongle
+
+teknicolor.lua
