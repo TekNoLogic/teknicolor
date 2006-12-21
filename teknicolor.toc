@@ -8,4 +8,7 @@
 
 ## OptionalDeps: Dongle
 
+Dongle.lua
+DongleUtils.lua
+
 teknicolor.lua
