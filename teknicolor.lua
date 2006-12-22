@@ -5,8 +5,8 @@ local colors, x, names = {}, {}, {}
 setmetatable(names, {
 	__index = function(t, k) return x[k] end,
 	__newindex = function(t, k, v)
-		teknicolor:Debug(1,k,v)
 		if not v or not k or x[k] or not colors[v] then return end
+		teknicolor:Debug(2,k,v)
 		x[k] = string.format("|cff%s[%s]|r", colors[v], k)
 	end,
 })
@@ -15,7 +15,7 @@ setmetatable(names, {
 teknicolor = Dongle:New("teknicolor")
 
 function teknicolor:Initialize()
-	self:EnableDebug(1)
+	self:EnableDebug(2)
 
 	for class,eng in pairs(revclass) do
 		local c = RAID_CLASS_COLORS[string.upper(eng)]
@@ -52,10 +52,8 @@ function teknicolor:Enable()
 	self:RegisterEvent("WHO_LIST_UPDATE")
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	self:RegisterEvent("CHAT_MSG_SYSTEM")
-end
 
-
-function teknicolor:VARIABLES_LOADED()
+	self:Debug(1, "Enable Called", IsInGuild() and "In Guild" or "No Guild", GetNumFriends().." Friends")
 	if IsInGuild() then GuildRoster() end
 	if GetNumFriends() > 0 then ShowFriends() end
 end
