@@ -3,8 +3,9 @@
 ## Title: teknicolor
 ## Notes: Color player names in chat by their corresponding raid class colors
 ## Author: Tekkub Stoutwrithe
-## X-Website: http://wiki.wowace.com/index.php/Teknicolor
-## X-Email: tekkub@gmail.com
+## X-Website: http://code.google.com/p/tekkub-wow/
+## X-Email: tekkub-wow@googlegroups.com
+## X-Category: Chat/Communications
 
 ## OptionalDeps: Dongle
 
