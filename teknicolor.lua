@@ -15,8 +15,6 @@ setmetatable(names, {
 teknicolor = Dongle:New("teknicolor")
 
 function teknicolor:Initialize()
-	self:EnableDebug(2)
-
 	for class,eng in pairs(revclass) do
 		local c = RAID_CLASS_COLORS[string.upper(eng)]
 		local hex = tohex(c.r, c.g, c.b)
