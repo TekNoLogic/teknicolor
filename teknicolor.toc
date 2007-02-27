@@ -3,6 +3,7 @@
 ## Title: teknicolor
 ## Notes: Color player names in chat by their corresponding raid class colors
 ## Author: Tekkub Stoutwrithe
+## Version: Alpha
 ## X-Website: http://code.google.com/p/tekkub-wow/
 ## X-Email: tekkub-wow@googlegroups.com
 ## X-Category: Chat/Communications
