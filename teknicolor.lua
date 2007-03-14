@@ -12,7 +12,7 @@ setmetatable(names, {
 })
 
 
-teknicolor = DongleStub("Dongle-Beta0"):New("teknicolor")
+teknicolor = DongleStub("Dongle-Beta1"):New("teknicolor")
 
 function teknicolor:Initialize()
 	for class,eng in pairs(revclass) do
