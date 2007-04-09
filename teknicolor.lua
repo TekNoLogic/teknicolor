@@ -1,6 +1,51 @@
 
-local revclass = DongleStub("DongleUtils").classnamesreverse
-local tohex = DongleStub("DongleUtils").RGBPercToHex
+
+----------------------------
+--      Localization      --
+----------------------------
+
+local locale = GetLocale()
+-- Localized class names.  Index == enUS, value == localized
+local classnames = locale == "deDE" and {
+	["Warlock"] = "Hexenmeister",
+	["Warrior"] = "Krieger",
+	["Hunter"] = "Jäger",
+	["Mage"] = "Magier",
+	["Priest"] = "Priester",
+	["Druid"] = "Druide",
+	["Paladin"] = "Paladin",
+	["Shaman"] = "Schamane",
+	["Rogue"] = "Schurke",
+} or locale == "frFR" and {
+	["Warlock"] = "D\195\169moniste",
+	["Warrior"] = "Guerrier",
+	["Hunter"] = "Chasseur",
+	["Mage"] = "Mage",
+	["Priest"] = "Pr\195\170tre",
+	["Druid"] = "Druide",
+	["Paladin"] = "Paladin",
+	["Shaman"] = "Chaman",
+	["Rogue"] = "Voleur",
+} or {
+	["Warlock"] = "Warlock",
+	["Warrior"] = "Warrior",
+	["Hunter"] = "Hunter",
+	["Mage"] = "Mage",
+	["Priest"] = "Priest",
+	["Druid"] = "Druid",
+	["Paladin"] = "Paladin",
+	["Shaman"] = "Shaman",
+	["Rogue"] = "Rogue",
+}
+
+local revclass = {}
+for i,v in pairs(classnames) do revclass[v] = i end
+
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
 local colors, x, names = {}, {}, {}
 setmetatable(names, {
 	__index = function(t, k) return x[k] end,
@@ -13,6 +58,12 @@ setmetatable(names, {
 
 
 teknicolor = DongleStub("Dongle-1.0-RC3"):New("teknicolor")
+
+
+local function tohex(r, g, b)
+	return string.format("%02x%02x%02x", r*255, g*255, b*255)
+end
+
 
 function teknicolor:Initialize()
 	for class,eng in pairs(revclass) do
