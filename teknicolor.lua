@@ -57,7 +57,7 @@ setmetatable(names, {
 })
 
 
-teknicolor = DongleStub("Dongle-1.0-RC3"):New("teknicolor")
+teknicolor = DongleStub("Dongle-1.0"):New("teknicolor")
 
 
 local function tohex(r, g, b)
