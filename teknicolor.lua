@@ -46,8 +46,8 @@ for i,v in pairs(classnames) do revclass[v] = i end
 --      Are you local?      --
 ------------------------------
 
-local colors, x, names = {}, {}, {}
-setmetatable(names, {
+local colors, x = {}, {}
+local names = setmetatable({}, {
 	__index = function(t, k) return x[k] end,
 	__newindex = function(t, k, v)
 		if not v or not k or x[k] or not colors[v] then return end
@@ -58,6 +58,7 @@ setmetatable(names, {
 
 
 teknicolor = DongleStub("Dongle-1.0"):New("teknicolor")
+teknicolor.nametable = names
 
 
 local function tohex(r, g, b)
