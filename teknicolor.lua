@@ -49,7 +49,7 @@ for i,v in pairs(classnames) do revclass[v] = i end
 local colors = {}
 local names = setmetatable({}, {
 	__newindex = function(t, k, v)
-		if not v or not k or x[k] or not colors[v] then return end
+		if not v or not k or not colors[v] then return end
 		rawset(t, k, (string.format("|cff%s[%s]|r", colors[v], k)))
 	end,
 })
