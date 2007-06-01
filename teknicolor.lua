@@ -46,11 +46,12 @@ for i,v in pairs(classnames) do revclass[v] = i end
 --      Are you local?      --
 ------------------------------
 
-local colors = {}
+local colors, x = {}, {}
 local names = setmetatable({}, {
+	__index = function(t, k) return x[k] end,
 	__newindex = function(t, k, v)
-		if not v or not k or not colors[v] then return end
-		rawset(t, k, (string.format("|cff%s[%s]|r", colors[v], k)))
+		if not v or not k or x[k] or not colors[v] then return end
+		x[k] = string.format("|cff%s[%s]|r", colors[v], k)
 	end,
 })
 
