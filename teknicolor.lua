@@ -74,18 +74,6 @@ function teknicolor:Initialize()
 		colors[string.upper(eng)] = hex
 	end
 	revclass = nil
-
-	local _G = getfenv(0)
-	for i=1,7 do
-		local f = _G["ChatFrame"..i]
-		local add = f.AddMessage
-		f.AddMessage = function(this, text, ...)
-			local name = arg2
-			if event == "CHAT_MSG_SYSTEM" then name = select(3, string.find(text, "|h%[(.+)%]|h")) end
-			if name and names[name] then text = string.gsub(text, "|h%["..name.."%]|h", "|h"..names[name].."|h") end
-			add(this, text, ...)
-		end
-	end
 end
 
 
@@ -108,10 +96,14 @@ function teknicolor:Enable()
 end
 
 
+------------------------------------
+--      Class caching events      --
+------------------------------------
+
 function teknicolor:FRIENDLIST_UPDATE()
 	for i=1,GetNumFriends() do
 		local name, _, class = GetFriendInfo(i)
-		names[name] = class
+		if name then names[name] = class end
 	end
 end
 
@@ -166,5 +158,52 @@ end
 function teknicolor:CHAT_MSG_SYSTEM()
 	local _, _, name, class = string.find(arg1, "^|Hplayer:%w+|h%[(%w+)%]|h: Level %d+ %w+ (%w+) %- .+$")
 	if name and class then names[name] = class end
+end
+
+
+----------------------------------
+--      Chatframe coloring      --
+----------------------------------
+
+local origadds = {}
+
+
+local function NewAddMessage(frame, text, ...)
+	local name = arg2
+	if event == "CHAT_MSG_SYSTEM" then name = select(3, string.find(text, "|h%[(.+)%]|h")) end
+	if name and names[name] then text = string.gsub(text, "|h%["..name.."%]|h", "|h"..names[name].."|h") end
+	return origadds[frame](frame, text, ...)
+end
+
+
+for i=1,7 do
+	local f = _G["ChatFrame"..i]
+	origadds[f] = f.AddMessage
+	f.AddMessage = NewAddMessage
+end
+
+
+------------------------------------
+--      Friend List Coloring      --
+------------------------------------
+
+local origs, frameindexes = {}, {}
+
+
+local function NewSetText(frame, ...)
+	local i = frameindexes[frame]
+	local name, _, class, area, connected, status = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
+	if name and class and colors[class] then
+		local text = ("|cff"..colors[class]..name.."|r")
+		return origs[frame](frame, (string.format(FRIENDS_LIST_TEMPLATE, text, area, status)))
+	else return origs[frame](frame, ...) end
+end
+
+
+for i=1,FRIENDS_TO_DISPLAY do
+	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextNameLocation"]
+	frameindexes[f] = i
+	origs[f] = f.SetText
+	f.SetText = NewSetText
 end
 
