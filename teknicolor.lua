@@ -190,7 +190,7 @@ end
 local origs, frameindexes = {}, {}
 
 
-local function NewSetText(frame, ...)
+local function NewSetFormattedText(frame, ...)
 	local i = frameindexes[frame]
 	local name, _, class, area, connected, status = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
 	if name and class and colors[class] then
@@ -203,7 +203,7 @@ end
 for i=1,FRIENDS_TO_DISPLAY do
 	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextNameLocation"]
 	frameindexes[f] = i
-	origs[f] = f.SetText
-	f.SetText = NewSetText
+	origs[f] = f.SetFormattedText
+	f.SetFormattedText = NewSetFormattedText
 end
 
