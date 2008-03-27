@@ -46,7 +46,7 @@ local classnames = locale == "deDE" and {
 local colors = {}
 for eng,class in pairs(classnames) do
 	local c = RAID_CLASS_COLORS[string.upper(eng)]
-	local hex = tohex(c.r, c.g, c.b)
+	local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
 	colors[eng] = hex
 	colors[class] = hex
 	colors[string.upper(eng)] = hex
@@ -65,11 +65,6 @@ local names = setmetatable({}, {
 
 teknicolor = DongleStub("Dongle-1.0"):New("teknicolor")
 teknicolor.nametable = names
-
-
-local function tohex(r, g, b)
-	return string.format("%02x%02x%02x", r*255, g*255, b*255)
-end
 
 
 local f = CreateFrame("Frame")
