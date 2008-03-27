@@ -63,7 +63,7 @@ local names = setmetatable({}, {
 })
 
 
-teknicolor = DongleStub("Dongle-1.0"):New("teknicolor")
+teknicolor = {}
 teknicolor.nametable = names
 
 
