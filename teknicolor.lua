@@ -173,11 +173,8 @@ local function NewAddMessage(frame, text, ...)
 end
 
 
-for i=1,7 do
-	local f = _G["ChatFrame"..i]
-	origadds[f] = f.AddMessage
-	f.AddMessage = NewAddMessage
-end
+ChatFrame1.AddMessage, origadds[f] = NewAddMessage, ChatFrame1.AddMessage
+for i=3,7 do _G["ChatFrame"..i].AddMessage, origadds[f] = NewAddMessage, _G["ChatFrame"..i].AddMessage end
 
 
 ------------------------------------
