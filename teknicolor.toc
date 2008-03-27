@@ -8,8 +8,4 @@
 ## X-Email: tekkub-wow@googlegroups.com
 ## X-Category: Chat/Communications
 
-## OptionalDeps: Dongle
-
-Dongle.lua
-
 teknicolor.lua

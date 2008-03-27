@@ -38,15 +38,22 @@ local classnames = locale == "deDE" and {
 	["Rogue"] = "Rogue",
 }
 
-local revclass = {}
-for i,v in pairs(classnames) do revclass[v] = i end
-
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local colors, x = {}, {}
+local colors = {}
+for eng,class in pairs(classnames) do
+	local c = RAID_CLASS_COLORS[string.upper(eng)]
+	local hex = tohex(c.r, c.g, c.b)
+	colors[eng] = hex
+	colors[class] = hex
+	colors[string.upper(eng)] = hex
+end
+
+
+local x = {}
 local names = setmetatable({}, {
 	__index = function(t, k) return x[k] end,
 	__newindex = function(t, k, v)
@@ -65,35 +72,30 @@ local function tohex(r, g, b)
 end
 
 
-function teknicolor:Initialize()
-	for class,eng in pairs(revclass) do
-		local c = RAID_CLASS_COLORS[string.upper(eng)]
-		local hex = tohex(c.r, c.g, c.b)
-		colors[eng] = hex
-		colors[class] = hex
-		colors[string.upper(eng)] = hex
-	end
-	revclass = nil
-end
+local f = CreateFrame("Frame")
+f:SetScript("OnEvent", function(self, event, ...) if teknicolor[event] then teknicolor[event](teknicolor, event, ...) end end)
 
 
-function teknicolor:Enable()
+function teknicolor:PLAYER_LOGIN()
 	names[UnitName("player")] = select(2, UnitClass("player"))
 
-	self:RegisterEvent("VARIABLES_LOADED")
-	self:RegisterEvent("FRIENDLIST_UPDATE")
-	self:RegisterEvent("GUILD_ROSTER_UPDATE")
-	self:RegisterEvent("RAID_ROSTER_UPDATE")
-	self:RegisterEvent("PARTY_MEMBERS_CHANGED")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
-	self:RegisterEvent("WHO_LIST_UPDATE")
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	self:RegisterEvent("CHAT_MSG_SYSTEM")
+--~ 	f:RegisterEvent("VARIABLES_LOADED")
+	f:RegisterEvent("FRIENDLIST_UPDATE")
+	f:RegisterEvent("GUILD_ROSTER_UPDATE")
+	f:RegisterEvent("RAID_ROSTER_UPDATE")
+	f:RegisterEvent("PARTY_MEMBERS_CHANGED")
+	f:RegisterEvent("PLAYER_TARGET_CHANGED")
+	f:RegisterEvent("WHO_LIST_UPDATE")
+	f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	f:RegisterEvent("CHAT_MSG_SYSTEM")
 
-	self:Debug(1, "Enable Called", IsInGuild() and "In Guild" or "No Guild", GetNumFriends().." Friends")
 	if IsInGuild() then GuildRoster() end
 	if GetNumFriends() > 0 then ShowFriends() end
+	self.PLAYER_LOGIN = nil
 end
+
+
+if IsLoggedIn() then teknicolor:PLAYER_LOGIN() else f:RegisterEvent("PLAYER_LOGIN") end
 
 
 ------------------------------------
