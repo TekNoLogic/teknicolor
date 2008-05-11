@@ -7,25 +7,33 @@
 local locale = GetLocale()
 -- Localized class names.  Index == enUS, value == localized
 local classnames = locale == "deDE" and {
-	["Warlock"] = "Hexenmeister",
-	["Warrior"] = "Krieger",
-	["Hunter"] = "Jäger",
-	["Mage"] = "Magier",
-	["Priest"] = "Priester",
-	["Druid"] = "Druide",
+	["Hexenmeister"] = "Warlock",
+	["Hexenmeisterin"] = "Warlock",
+	["Krieger"] = "Warrior",
+	["Kriegerin"] = "Warrior",
+	["J\195\164ger"] = "Hunter",
+	["J\195\164gerin"] = "Hunter",
+	["Magier"] = "Mage",
+	["Magierin"] = "Mage",
+	["Priester"] = "Priest",
+	["Priesterin"] = "Priest",
+	["Druide"] = "Druid",
+	["Druidin"] = "Druid",
 	["Paladin"] = "Paladin",
-	["Shaman"] = "Schamane",
-	["Rogue"] = "Schurke",
+	["Schamane"] = "Shaman",
+	["Schamanin"] = "Shaman",
+	["Schurke"] = "Rogue",
+	["Schurkin"] = "Rogue",
 } or locale == "frFR" and {
-	["Warlock"] = "D\195\169moniste",
-	["Warrior"] = "Guerrier",
-	["Hunter"] = "Chasseur",
+	["D\195\169moniste"] = "Warlock",
+	["Guerrier"] = "Warrior",
+	["Chasseur"] = "Hunter",
 	["Mage"] = "Mage",
-	["Priest"] = "Pr\195\170tre",
-	["Druid"] = "Druide",
+	["Pr\195\170tre"] = "Priest",
+	["Druide"] = "Druid",
 	["Paladin"] = "Paladin",
-	["Shaman"] = "Chaman",
-	["Rogue"] = "Voleur",
+	["Chaman"] = "Shaman",
+	["Voleur"] = "Rogue",
 } or {
 	["Warlock"] = "Warlock",
 	["Warrior"] = "Warrior",
@@ -44,7 +52,7 @@ local classnames = locale == "deDE" and {
 ------------------------------
 
 local colors = {}
-for eng,class in pairs(classnames) do
+for class,eng in pairs(classnames) do
 	local c = RAID_CLASS_COLORS[string.upper(eng)]
 	local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
 	colors[eng] = hex
