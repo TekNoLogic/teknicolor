@@ -116,7 +116,7 @@ end
 function teknicolor:GUILD_ROSTER_UPDATE()
 	for i=1,GetNumGuildMembers(true) do
 		local name, _, _, _,class = GetGuildRosterInfo(i)
-		names[name] = class
+		if name then names[name] = class end
 	end
 end
 
