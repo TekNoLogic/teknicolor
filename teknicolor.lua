@@ -5,7 +5,6 @@
 ----------------------------
 
 local locale = GetLocale()
--- Localized class names.  Index == enUS, value == localized
 local classnames = locale == "deDE" and {
 	["Hexenmeister"] = "Warlock",
 	["Hexenmeisterin"] = "Warlock",
@@ -27,13 +26,19 @@ local classnames = locale == "deDE" and {
 } or locale == "frFR" and {
 	["D\195\169moniste"] = "Warlock",
 	["Guerrier"] = "Warrior",
+	["Guerri\195\168re"] = "Warrior",
 	["Chasseur"] = "Hunter",
+	["Chasseresse"] = "Hunter",
 	["Mage"] = "Mage",
 	["Pr\195\170tre"] = "Priest",
+	["Pr\195\170tresse"] = "Priest",
 	["Druide"] = "Druid",
+	["Druidesse"] = "Druid",
 	["Paladin"] = "Paladin",
 	["Chaman"] = "Shaman",
+	["Chamane"] = "Shaman",
 	["Voleur"] = "Rogue",
+	["Voleuse"] = "Rogue",
 } or {
 	["Warlock"] = "Warlock",
 	["Warrior"] = "Warrior",
