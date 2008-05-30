@@ -66,12 +66,13 @@ for class,eng in pairs(classnames) do
 end
 
 
-local x = {}
+local x, namesnobracket = {}, {}
 local names = setmetatable({}, {
 	__index = function(t, k) return x[k] end,
 	__newindex = function(t, k, v)
 		if not v or not k or x[k] or not colors[v] then return end
 		x[k] = string.format("|cff%s[%s]|r", colors[v], k)
+		namesnobracket[k] = "|cff".. colors[v].. k.. "|r"
 	end,
 })
 
@@ -180,7 +181,11 @@ local origadds = {}
 
 local function NewAddMessage(frame, text, ...)
 	local name = arg2
-	if event == "CHAT_MSG_SYSTEM" then name = select(3, string.find(text, "|h%[(.+)%]|h")) end
+	if event == "CHAT_MSG_SYSTEM" then
+		local pname = text:match("^(%S+) has gone offline.$")
+		if pname and namesnobracket[pname] then text = namesnobracket[pname].." has gone offline."
+		else name = select(3, string.find(text, "|h%[(.+)%]|h")) end
+	end
 	if name and names[name] then text = string.gsub(text, "|h%["..name.."%]|h", "|h"..names[name].."|h") end
 	return origadds[frame](frame, text, ...)
 end
