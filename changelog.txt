@@ -1,3 +1,6 @@
+2.4.2.3-Release
+    Add in frFR female class names
+
 2.4.2.2-Release
     Nil-safe GUILD_ROSTER_UPDATE, seems it has issues on zoning
     Add in deDE female class names
