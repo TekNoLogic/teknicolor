@@ -1,0 +1,8 @@
+2.4.2.2-Release
+    Nil-safe GUILD_ROSTER_UPDATE, seems it has issues on zoning
+    Add in deDE female class names
+
+2.4.0.1-Release
+    Don't fuck with the combat log anymore, it's just not worth it.
+    Fix hex converter
+    Remove dongle
