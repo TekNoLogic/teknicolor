@@ -1,3 +1,6 @@
+2.4.2.4-Release
+    Colorize the logout messages
+
 2.4.2.3-Release
     Add in frFR female class names
 
