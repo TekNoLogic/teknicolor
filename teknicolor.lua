@@ -202,20 +202,18 @@ for i=3,7 do _G["ChatFrame"..i].AddMessage, origadds[_G["ChatFrame"..i]] = NewAd
 local origs, frameindexes = {}, {}
 
 
-local function NewSetFormattedText(frame, ...)
+local function NewSetText(frame, name, ...)
 	local i = frameindexes[frame]
-	local name, _, class, area, connected, status = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
-	if name and class and colors[class] then
-		local text = ("|cff"..colors[class]..name.."|r")
-		return origs[frame](frame, (string.format(FRIENDS_LIST_TEMPLATE, text, area, status)))
-	else return origs[frame](frame, ...) end
+	local _, _, class = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
+	if name and class and colors[class] then return origs[frame](frame, "|cff"..colors[class]..name.."|r", ...)
+	else return origs[frame](frame, name, ...) end
 end
 
 
 for i=1,FRIENDS_TO_DISPLAY do
-	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextNameLocation"]
+	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextName"]
 	frameindexes[f] = i
-	origs[f] = f.SetFormattedText
-	f.SetFormattedText = NewSetFormattedText
+	origs[f] = f.SetText
+	f.SetText = NewSetText
 end
 
