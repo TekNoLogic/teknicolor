@@ -23,6 +23,7 @@ local classnames = locale == "deDE" and {
 	["Schamanin"] = "Shaman",
 	["Schurke"] = "Rogue",
 	["Schurkin"] = "Rogue",
+	["Death Knight"] = "Death Knight",
 } or locale == "frFR" and {
 	["D\195\169moniste"] = "Warlock",
 	["Guerrier"] = "Warrior",
@@ -39,6 +40,7 @@ local classnames = locale == "deDE" and {
 	["Chamane"] = "Shaman",
 	["Voleur"] = "Rogue",
 	["Voleuse"] = "Rogue",
+	["Death Knight"] = "Death Knight",
 } or {
 	["Warlock"] = "Warlock",
 	["Warrior"] = "Warrior",
@@ -49,6 +51,7 @@ local classnames = locale == "deDE" and {
 	["Paladin"] = "Paladin",
 	["Shaman"] = "Shaman",
 	["Rogue"] = "Rogue",
+	["Death Knight"] = "Death Knight",
 }
 
 
@@ -58,11 +61,12 @@ local classnames = locale == "deDE" and {
 
 local colors = {}
 for class,eng in pairs(classnames) do
-	local c = RAID_CLASS_COLORS[string.upper(eng)]
+	local token = eng:gsub(" ", ""):upper()
+	local c = RAID_CLASS_COLORS[token]
 	local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
 	colors[eng] = hex
 	colors[class] = hex
-	colors[string.upper(eng)] = hex
+	colors[token] = hex
 end
 
 
