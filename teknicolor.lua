@@ -63,10 +63,12 @@ local colors = {}
 for class,eng in pairs(classnames) do
 	local token = eng:gsub(" ", ""):upper()
 	local c = RAID_CLASS_COLORS[token]
-	local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
-	colors[eng] = hex
-	colors[class] = hex
-	colors[token] = hex
+	if c then
+		local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
+		colors[eng] = hex
+		colors[class] = hex
+		colors[token] = hex
+	end
 end
 
 
