@@ -23,7 +23,7 @@ local classnames = locale == "deDE" and {
 	["Schamanin"] = "Shaman",
 	["Schurke"] = "Rogue",
 	["Schurkin"] = "Rogue",
-	["Death Knight"] = "Death Knight",
+	["Todesritter"] = "Death Knight",
 } or locale == "frFR" and {
 	["D\195\169moniste"] = "Warlock",
 	["Guerrier"] = "Warrior",
