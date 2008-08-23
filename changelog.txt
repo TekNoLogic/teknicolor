@@ -1,3 +1,8 @@
+3.0.1.5-Release
+    Adapt english handler for DK's
+    Use token class name from guild instead of engrish one
+    Fix patch 2.4.3 breaking friend list coloring (On Live this is tainty.  You've been warned!)
+
 2.4.2.4-Release
     Colorize the logout messages
 
