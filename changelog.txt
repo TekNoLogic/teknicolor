@@ -1,3 +1,7 @@
+3.0.1.6-Release
+    Bugger, make compatilbe with Live
+    deDEDK
+
 3.0.1.5-Release
     Adapt english handler for DK's
     Use token class name from guild instead of engrish one
