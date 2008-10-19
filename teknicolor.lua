@@ -209,11 +209,16 @@ for i=3,7 do _G["ChatFrame"..i].AddMessage, origadds[_G["ChatFrame"..i]] = NewAd
 local origs, frameindexes = {}, {}
 
 
+local inhook
 local function NewSetText(frame, name, ...)
+	if inhook then return end -- Failsafe to avoid the great infinity
+	inhook = true
+
 	local i = frameindexes[frame]
 	local _, _, class = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
-	if name and class and colors[class] then return origs[frame](frame, "|cff"..colors[class]..name.."|r", ...)
-	else return origs[frame](frame, name, ...) end
+	if name and class and colors[class] then origs[frame](frame, "|cff"..colors[class]..name.."|r", ...) end
+
+	inhook = nil
 end
 
 
@@ -221,6 +226,6 @@ for i=1,FRIENDS_TO_DISPLAY do
 	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextName"]
 	frameindexes[f] = i
 	origs[f] = f.SetText
-	f.SetText = NewSetText
+	hooksecurefunc(f, "SetText", NewSetText)
 end
 
