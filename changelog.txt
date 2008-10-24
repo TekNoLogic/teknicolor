@@ -1,3 +1,6 @@
+3.0.2.7-Release
+    Would you like to finger my taint?
+
 3.0.1.6-Release
     Bugger, make compatilbe with Live
     deDEDK
