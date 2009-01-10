@@ -208,11 +208,13 @@ end
 local origadds = {}
 
 
+--ERR_FRIEND_OFFLINE_S = "%s has gone offline."
+local OFFLINE_MATCH = string.gsub(ERR_FRIEND_OFFLINE_S, "%%s", "(%%S+)")
 local function NewAddMessage(frame, text, ...)
 	local name = arg2
 	if event == "CHAT_MSG_SYSTEM" then
-		local pname = text:match("^(%S+) has gone offline.$")
-		if pname and namesnobracket[pname] then text = namesnobracket[pname].." has gone offline."
+		local pname = text:match(OFFLINE_MATCH)
+		if pname and namesnobracket[pname] then text = string.format(ERR_FRIEND_OFFLINE_S, namesnobracket[pname])
 		else name = select(3, string.find(text, "|h%[(.+)%]|h")) end
 	end
 	if name and names[name] then text = string.gsub(text, "|h%["..name.."%]|h", "|h"..names[name].."|h") end
