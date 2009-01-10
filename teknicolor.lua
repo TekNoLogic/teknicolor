@@ -42,7 +42,7 @@ local classnames = locale == "deDE" and {
 	["Voleur"] = "Rogue",
 	["Voleuse"] = "Rogue",
 	["Death Knight"] = "Death Knight",
-} locale == "zhCN" and {
+} or locale == "zhCN" and {
 	["\230\156\175\229\163\171"] = "Warlock",
 	["\230\136\152\229\163\171"] = "Warrior",
 	["\231\140\142\228\186\186"] = "Hunter",
