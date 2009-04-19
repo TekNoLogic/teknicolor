@@ -83,27 +83,54 @@ local classnames = locale == "deDE" and {
 ------------------------------
 
 local colors = {}
-for class,eng in pairs(classnames) do
-	local token = eng:gsub(" ", ""):upper()
-	local c = RAID_CLASS_COLORS[token]
-	if c then
-		local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
-		colors[eng] = hex
-		colors[class] = hex
-		colors[token] = hex
-	end
-end
+local nameclass = {}
+local namesnobracket = setmetatable({}, {
+	__index = function(t, k)
+		local nc = k and nameclass[k]
+		local c = nc and colors[nc]
+		if not c then return end
 
-
-local x, namesnobracket = {}, {}
-local names = setmetatable({}, {
-	__index = function(t, k) return x[k] end,
-	__newindex = function(t, k, v)
-		if not v or not k or x[k] or not colors[v] then return end
-		x[k] = string.format("|cff%s[%s]|r", colors[v], k)
-		namesnobracket[k] = "|cff".. colors[v].. k.. "|r"
+		local v = "|cff".. c.. k.. "|r"
+		t[k] = v
+		return v
 	end,
 })
+local x = setmetatable({}, {
+	__index = function(t, k)
+		local nc = k and nameclass[k]
+		local c = nc and colors[nc]
+		if not c then return end
+
+		local v = string.format("|cff%s[%s]|r", c, k)
+		t[k] = v
+		return v
+	end,
+})
+local names = setmetatable({}, {
+	__index = function(t, k) return x[k] end,
+	__newindex = function(t, k, v) nameclass[k] = v end,
+})
+
+
+local function SetColors()
+	for i in pairs(x) do x[i] = nil end
+	for i in pairs(namesnobracket) do namesnobracket[i] = nil end
+	local cc = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+	for class,eng in pairs(classnames) do
+		local token = eng:gsub(" ", ""):upper()
+		local c = cc[token]
+		if c then
+			local hex = string.format("%02x%02x%02x", c.r*255, c.g*255, c.b*255)
+			colors[eng] = hex
+			colors[class] = hex
+			colors[token] = hex
+		end
+	end
+end
+SetColors()
+if CUSTOM_CLASS_COLORS then CUSTOM_CLASS_COLORS:RegisterCallback(SetColors) end
+SetColors = nil
+
 
 
 teknicolor = {}

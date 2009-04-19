@@ -8,4 +8,6 @@
 ## X-Email: tekkub-wow@googlegroups.com
 ## X-Category: Chat/Communications
 
+## OptionalDeps: !ClassColors
+
 teknicolor.lua
