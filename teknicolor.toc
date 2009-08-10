@@ -1,4 +1,4 @@
-## Interface: 30000
+## Interface: 30200
 
 ## Title: teknicolor
 ## Notes: Color player names in chat by their corresponding raid class colors
