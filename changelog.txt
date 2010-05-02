@@ -1,3 +1,6 @@
+3.3.0.9-Release
+    No changes, just tagging as a stable release
+
 3.2.0.8-Beta
     Rejigger for 3.2, log on/off wasn't colored nor the friend's list
     Add support for CUSTOM_CLASS_COLORS
