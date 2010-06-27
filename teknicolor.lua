@@ -123,10 +123,8 @@ local function NewSetText(frame, str, ...)
 
 	local i, butt = frameindexes[frame], butts[frame]
 	if butt.buttonType == FRIENDS_BUTTON_TYPE_WOW then
-		local name, level, class, area, connected, status, note = GetFriendInfo(butt.id)
-		if str and class and connected and colors[class] then
-			origs[frame](frame, name..", "..format(FRIENDS_LEVEL_TEMPLATE, level, "|cff"..colors[class]..class.."|r"), ...)
-		end
+		local name, _, class = GetFriendInfo(butt.id)
+		if name and class and colors[class] then origs[frame](frame, "|cff"..colors[class]..name.."|r", ...) end
 	elseif butt.buttonType == FRIENDS_BUTTON_TYPE_BNET then
 		local presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = BNGetFriendInfo(butt.id)
 		if toonID and toonName and client == BNET_CLIENT_WOW then
