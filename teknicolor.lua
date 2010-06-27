@@ -113,20 +113,19 @@ end)
 --      Friend List Coloring      --
 ------------------------------------
 
-local origs, frameindexes, butts = {}, {}, {}
+local origs, butts, inhook = {}, {}
 
 
-local inhook
 local function NewSetText(frame, str, ...)
 	if inhook then return end -- Failsafe to avoid the great infinity
 	inhook = true
 
-	local i, butt = frameindexes[frame], butts[frame]
+	local butt = butts[frame]
 	if butt.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, _, class = GetFriendInfo(butt.id)
 		if name and class and colors[class] then origs[frame](frame, "|cff"..colors[class]..name.."|r", ...) end
 	elseif butt.buttonType == FRIENDS_BUTTON_TYPE_BNET then
-		local presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = BNGetFriendInfo(butt.id)
+		local _, _, _, toonName, toonID, client = BNGetFriendInfo(butt.id)
 		if toonID and toonName and client == BNET_CLIENT_WOW then
 			local hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = BNGetToonInfo(toonID)
 			if class and colors[class] then
@@ -145,7 +144,6 @@ end
 for i=1,FRIENDS_TO_DISPLAY do
 	local f = _G["FriendsFrameFriendsScrollFrameButton"..i.."Name"]
 	butts[f] = _G["FriendsFrameFriendsScrollFrameButton"..i]
-	frameindexes[f] = i
 	origs[f] = f.SetText
 	hooksecurefunc(f, "SetText", NewSetText)
 end
