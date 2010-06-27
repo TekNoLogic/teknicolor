@@ -130,10 +130,10 @@ local function NewSetText(frame, str, ...)
 		if toonID and toonName and client == BNET_CLIENT_WOW then
 			local hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = BNGetToonInfo(toonID)
 			if class and colors[class] then
-				local coop = CanCooperateWithToon(toonID) and "" or "*"
-				local coopcolor = coop == "" and FRIENDS_WOW_NAME_COLOR_CODE or FRIENDS_OTHER_NAME_COLOR_CODE
-				if coop == "*" and ENABLE_COLORBLIND_MODE == "1" then toonName = toonName..CANNOT_COOPERATE_LABEL end
-				origs[frame](frame, str:gsub("%("..toonName.."%)", "(|cff"..colors[class]..toonName..coopcolor..coop..")"), ...)
+				local coop = CanCooperateWithToon(toonID)
+				local coopcolor = coop and FRIENDS_WOW_NAME_COLOR_CODE or FRIENDS_OTHER_NAME_COLOR_CODE
+				if coop and ENABLE_COLORBLIND_MODE == "1" then toonName = toonName..CANNOT_COOPERATE_LABEL end
+				origs[frame](frame, str:gsub("%("..toonName.."%)", "(|cff"..colors[class]..toonName..coopcolor..")"), ...)
 			end
 		end
 	end
