@@ -113,24 +113,40 @@ end)
 --      Friend List Coloring      --
 ------------------------------------
 
-local origs, frameindexes = {}, {}
+local origs, frameindexes, butts = {}, {}, {}
 
 
 local inhook
-local function NewSetText(frame, name, ...)
+local function NewSetText(frame, str, ...)
 	if inhook then return end -- Failsafe to avoid the great infinity
 	inhook = true
 
-	local i = frameindexes[frame]
-	local _, _, class = GetFriendInfo(FauxScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame) + i)
-	if name and class and colors[class] then origs[frame](frame, "|cff"..colors[class]..name.."|r", ...) end
+	local i, butt = frameindexes[frame], butts[frame]
+	if butt.buttonType == FRIENDS_BUTTON_TYPE_WOW then
+		local name, level, class, area, connected, status, note = GetFriendInfo(butt.id)
+		if str and class and connected and colors[class] then
+			origs[frame](frame, name..", "..format(FRIENDS_LEVEL_TEMPLATE, level, "|cff"..colors[class]..class.."|r"), ...)
+		end
+	elseif butt.buttonType == FRIENDS_BUTTON_TYPE_BNET then
+		local presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = BNGetFriendInfo(butt.id)
+		if toonID and toonName and client == BNET_CLIENT_WOW then
+			local hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = BNGetToonInfo(toonID)
+			if class and colors[class] then
+				local coop = CanCooperateWithToon(toonID) and "" or "*"
+				local coopcolor = coop == "" and FRIENDS_WOW_NAME_COLOR_CODE or FRIENDS_OTHER_NAME_COLOR_CODE
+				if coop == "*" and ENABLE_COLORBLIND_MODE == "1" then toonName = toonName..CANNOT_COOPERATE_LABEL end
+				origs[frame](frame, str:gsub("%("..toonName.."%)", "(|cff"..colors[class]..toonName..coopcolor..coop..")"), ...)
+			end
+		end
+	end
 
 	inhook = nil
 end
 
 
 for i=1,FRIENDS_TO_DISPLAY do
-	local f = _G["FriendsFrameFriendButton"..i.."ButtonTextName"]
+	local f = _G["FriendsFrameFriendsScrollFrameButton"..i.."Name"]
+	butts[f] = _G["FriendsFrameFriendsScrollFrameButton"..i]
 	frameindexes[f] = i
 	origs[f] = f.SetText
 	hooksecurefunc(f, "SetText", NewSetText)
