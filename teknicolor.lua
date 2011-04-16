@@ -100,9 +100,13 @@ end
 ----------------------------------
 
 local OFFLINE_MATCH = ERR_FRIEND_OFFLINE_S:gsub("%%s", "(%%S+)")
+local ROLL_MATCH = RANDOM_ROLL_RESULT:gsub("%(", "%%("):gsub("%)", "%%)"):gsub("%%s", "(%%S+)"):gsub("%%d", "(%%d+)")
 ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg, ...)
 	local pname = msg:match(OFFLINE_MATCH)
 	if pname and namesnobracket[pname] then return false, string.format(ERR_FRIEND_OFFLINE_S, namesnobracket[pname]), ... end
+
+	local pname, roll, min, max = msg:match(ROLL_MATCH)
+	if pname and namesnobracket[pname] then return false, string.format(RANDOM_ROLL_RESULT, namesnobracket[pname], roll, min, max), ... end
 
 	local name = msg:match("|h%[(.+)%]|h")
 	if name and names[name] then return false, msg:gsub("|h%["..name.."%]|h", "|h"..names[name].."|h"), ... end
