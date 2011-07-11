@@ -1,8 +1,0 @@
-teknicolor is a simple addon, it colors player links in chat by their class color, if known.
-It will color for any player you have "seen" since login, guild memebers, friends, party/raid members, any player you've moused over or seen in /who results.
-
-h2. Links
-
-<b>Visit "my site":http://tekkub.net/ for more great addons<br>
-Please report all bugs and feature requests to my "Github tracker":http://github.com/tekkub/teknicolor/issues<br>
-Please direct all feedback and questions to my "Google Groups":http://groups-beta.google.com/group/tekkub-wow mailinglist.</b>
